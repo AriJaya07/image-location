@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { Colors } from "../../constants/colors";
 import PlaceItem from "./PlaceItem";
@@ -16,6 +16,7 @@ function PlaceList({ places }) {
 
   return (
     <FlatList
+      style={styles.list}
       data={places}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PlaceItem place={item} />}
@@ -26,6 +27,9 @@ function PlaceList({ places }) {
 export default PlaceList;
 
 const styles = StyleSheet.create({
+  list: {
+    margin: 24,
+  },
   fallbackContainer: {
     flex: 1,
     justifyContent: "center",
@@ -33,6 +37,6 @@ const styles = StyleSheet.create({
   },
   fallbackText: {
     fontSize: 16,
-    color: Colors.primary200
+    color: Colors.primary200,
   },
 });

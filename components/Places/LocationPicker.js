@@ -13,10 +13,10 @@ import {
 
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
-import { getMapPreview } from "../../util/location";
+import { getAddress, getMapPreview } from "../../util/location";
 
-function LocationPicker() {
-  const [pickedLoaction, setPickedLocation] = useState();
+function LocationPicker({ onPickLocation }) {
+  const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
@@ -31,9 +31,23 @@ function LocationPicker() {
         lat: route.params.pickedLat,
         lng: route.params.pickedLng,
       };
-      setPickedLocation(mapPickedLocation)
+      setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    }
+
+    handleLocation();
+  }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {
     if (
@@ -74,12 +88,12 @@ function LocationPicker() {
 
   let locationPreview = <Text>No location piceked yet.</Text>;
 
-  if (pickedLoaction) {
+  if (pickedLocation) {
     locationPreview = (
       <Image
         style={styles.image}
         source={{
-          uri: getMapPreview(pickedLoaction.lat, pickedLoaction.lng),
+          uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
         }}
       />
     );

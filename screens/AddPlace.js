@@ -3,10 +3,16 @@ import { StyleSheet } from "react-native";
 import PlaceForm from "../components/Places/PlaceForm";
 import { Colors } from "../constants/colors";
 
-function AddPlace() {
+function AddPlace({ navigation }) {
+  function createPleaceHandler(place) {
+    navigation.navigate("AllPlaces", {
+      place: place
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <PlaceForm />
+      <PlaceForm onCreatePlace={createPleaceHandler} />
     </View>
   );
 }
