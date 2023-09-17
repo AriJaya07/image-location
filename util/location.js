@@ -9,7 +9,6 @@ export function getMapPreview(lat, lng) {
 export async function getAddress(lat, lng) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
   const response = await fetch(url);
-  console.log(response, 'res')
 
   if (!response.ok) {
     throw new Error("Failed to fetch address!");

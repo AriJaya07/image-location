@@ -1,13 +1,14 @@
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
+
 import PlaceForm from "../components/Places/PlaceForm";
 import { Colors } from "../constants/colors";
+import { insertPlace } from "../util/database";
 
 function AddPlace({ navigation }) {
-  function createPleaceHandler(place) {
-    navigation.navigate("AllPlaces", {
-      place: place
-    })
+  async function createPleaceHandler(place) {
+    await insertPlace(place);
+    navigation.navigate("AllPlaces");
   }
 
   return (
